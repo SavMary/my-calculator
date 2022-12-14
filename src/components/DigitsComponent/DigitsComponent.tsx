@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import "./DigitsComponent.scss";
+import classNames from "classnames";
 
 type Props = {
     handler: (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
@@ -61,15 +62,13 @@ const DigitsComponent: React.FC<Props> = ({handler, reset}) => {
             </button>
             <button
                 value={reset ? "AC" : "C"}
-                className="digits__item"
+                className={classNames("digits__item", {
+                    "disabled": reset
+                })}
                 onClick={e => handler(e)}
                 disabled={reset}
             >
-                {
-                    reset
-                        ? <p className="digits__item--value">AC</p>
-                        : <p className="digits__item--value">C</p>
-                }
+              <p className={"digits__item--value"}>{reset ? 'AC' : 'C'}</p>
             </button>
             <button
                 value={'='}
