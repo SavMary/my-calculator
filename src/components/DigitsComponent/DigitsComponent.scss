@@ -1,0 +1,34 @@
+
+.digits {
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    &__item {
+        height: 6vw;
+        width: 6vw;
+        border: 1px solid #eee;
+        background-color: aqua;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 4;
+        cursor: pointer;
+
+        @media (max-width: 1000px) {
+            height: 25vw;
+            width: 25vw;
+        }
+
+        &--value {
+            display: block;
+            margin: auto;
+        }
+
+        &:hover {
+            opacity: 40%;
+        }
+    }
+
+}
