@@ -5,8 +5,9 @@ import classNames from "classnames";
 type Props = {
     handler: (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     reset: boolean,
+    visibleValue: string,
 }
-const DigitsComponent: React.FC<Props> = ({handler, reset}) => {
+const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
     const [digits, setDigits] = useState<number[]>([]);
 
     useEffect(() => {
@@ -26,15 +27,17 @@ const DigitsComponent: React.FC<Props> = ({handler, reset}) => {
             {digits.map(num => (
                 <button
                     value={num}
-                    className="digits__item" key={num}
+                    className="digits__item digits__item--number"
+                    key={num}
                     onClick={e => handler(e)}
                 >
-                    <p className="digits__item--number">{num}</p>
+                    <p>{num}</p>
                 </button>
             ))}
             <button
                 value={'+'}
                 className="digits__item"
+                disabled={visibleValue === "0"}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">+</p>
@@ -42,6 +45,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset}) => {
             <button
                 value={'-'}
                 className="digits__item"
+                disabled={visibleValue === "0"}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">-</p>
@@ -49,6 +53,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset}) => {
             <button
                 value={'*'}
                 className="digits__item"
+                disabled={visibleValue === "0"}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">*</p>
@@ -56,6 +61,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset}) => {
             <button
                 value={'/'}
                 className="digits__item"
+                disabled={visibleValue === "0"}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">/</p>

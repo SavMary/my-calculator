@@ -17,9 +17,13 @@ let visibleDigits = "";
             setReset(true);
         }
     }, [calculation.length]);
+      useEffect(() => {
+          if (visibleValue === 'Infinity' || visibleValue === '-Infinity') {
+              setVisibleValue('Ойой, так робити не можна')
+          }
+      }, [visibleValue])
 
-
-    const handler = (e:  React.MouseEvent<HTMLButtonElement>) => {
+      const handler = (e:  React.MouseEvent<HTMLButtonElement>) => {
         let value = e.currentTarget.value;
         const length = calculation[calculation.length - 1];
 
@@ -52,7 +56,7 @@ let visibleDigits = "";
   return (
     <div className="App">
         <ScreenComponent visibleValue={visibleValue}/>
-        <DigitsComponent handler={handler} reset={reset}/>
+        <DigitsComponent handler={handler} reset={reset} visibleValue={visibleValue}/>
     </div>
   );
 }
