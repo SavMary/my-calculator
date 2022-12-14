@@ -6,8 +6,9 @@ type Props = {
     handler: (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     reset: boolean,
     visibleValue: string,
+    isLoading: boolean,
 }
-const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
+const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue, isLoading}) => {
     const [digits, setDigits] = useState<number[]>([]);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
                     value={num}
                     className="digits__item digits__item--number"
                     key={num}
+                    disabled={isLoading}
                     onClick={e => handler(e)}
                 >
                     <p>{num}</p>
@@ -37,7 +39,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
             <button
                 value={'+'}
                 className="digits__item"
-                disabled={visibleValue === "0"}
+                disabled={visibleValue === "0" || isLoading}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">+</p>
@@ -45,7 +47,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
             <button
                 value={'-'}
                 className="digits__item"
-                disabled={visibleValue === "0"}
+                disabled={visibleValue === "0" || isLoading}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">-</p>
@@ -53,7 +55,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
             <button
                 value={'*'}
                 className="digits__item"
-                disabled={visibleValue === "0"}
+                disabled={visibleValue === "0" || isLoading}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">*</p>
@@ -61,7 +63,7 @@ const DigitsComponent: React.FC<Props> = ({handler, reset, visibleValue}) => {
             <button
                 value={'/'}
                 className="digits__item"
-                disabled={visibleValue === "0"}
+                disabled={visibleValue === "0" || isLoading}
                 onClick={e => handler(e)}
             >
                 <p className="digits__item--value">/</p>

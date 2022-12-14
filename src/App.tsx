@@ -9,6 +9,7 @@ let visibleDigits = "";
   function App() {
     const [visibleValue, setVisibleValue] = useState("0");
     const [reset, setReset] = useState(true);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         if (calculation.length > 0) {
@@ -19,13 +20,20 @@ let visibleDigits = "";
     }, [calculation.length]);
       useEffect(() => {
           if (visibleValue === 'Infinity' || visibleValue === '-Infinity') {
-              setVisibleValue('Ойой, так робити не можна')
+              setVisibleValue('Ойой, так робити не можна');
+              setLoading(true);
+              setTimeout(() => {
+                  setVisibleValue("0");
+                  calculation = "";
+                  visibleDigits = "";
+                  setLoading(false);
+              }, 1500)
           }
       }, [visibleValue])
 
       const handler = (e:  React.MouseEvent<HTMLButtonElement>) => {
-        let value = e.currentTarget.value;
-        const length = calculation[calculation.length - 1];
+        const value = e.currentTarget.value;
+        const prevValue = calculation[calculation.length - 1];
 
         if (value === "C") {
             setVisibleValue ("0");
@@ -39,24 +47,23 @@ let visibleDigits = "";
 
         }
         if (value !== '=' && value !== 'C') {
-                calculation += value;
+          calculation += value;
 
-                if (value !== "+" && value !== "-" && value !== "*" && value !== "/") {
-                    visibleDigits += value;
-                 }
+          if (value !== "+" && value !== "-" && value !== "*" && value !== "/") {
+            visibleDigits += value;
+          }
 
-                if (length === "+" || length === "-" || length === "*" || length === "/") {
-                    visibleDigits = value;
-                }
-
-                setVisibleValue(visibleDigits);
-                }
+          if (prevValue === "+" || prevValue === "-" || prevValue === "*" || prevValue === "/") {
+            visibleDigits = value;
+          }
+            setVisibleValue(visibleDigits);
+        }
     }
 
   return (
     <div className="App">
         <ScreenComponent visibleValue={visibleValue}/>
-        <DigitsComponent handler={handler} reset={reset} visibleValue={visibleValue}/>
+        <DigitsComponent handler={handler} reset={reset} visibleValue={visibleValue} isLoading={isLoading}/>
     </div>
   );
 }
